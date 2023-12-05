@@ -1,0 +1,7 @@
+datasets==2.14.6
+matplotlib==3.5.1
+numpy==1.26.1
+torch==2.1.0
+torchinfo==1.6.3
+tqdm==4.62.3
+transformers==4.27.4
