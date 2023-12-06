@@ -6,6 +6,8 @@ This repository contains an autoregressive decoder transformer trained from scra
 
 ## Running the Demo
 
+To run the Streamlit demo, execute `streamlit run app.py`.
+
 For points of contact, please directly contact the authors of this repository.
 
 ### Data Acknowledgements
