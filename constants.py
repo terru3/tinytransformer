@@ -18,8 +18,8 @@ SAVE_EVERY = int(EPOCHS*0.05) # save model every x epochs
 GENERATE_EVERY = int(EPOCHS*0.05) # generate text from model every x epochs
 # PERIOD_NUM_EPOCH = 10 # period of cosine annealing scheduler, in number of epochs
 
-## Step-level hyperparameters——how often to compute train and validation losses——appear later
-## Those require the data to be loaded in first to compute number of steps in a batch
+## Step-level hyperparameters——how often to compute train and validation losses
+COMPUTE_PER_EPOCH = 10 # approx. number of times to print training statistics per epoch
 
 ## Model loading
 # If loading, set CHECKPOINT = True and specify LOAD_EPOCH

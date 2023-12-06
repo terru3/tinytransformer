@@ -53,8 +53,7 @@ def get_dataloaders():
 
 def prep_train(train_dataloader):
     """
-    Returns newly initialized model, tokenizer, and optimizer as well as TRAIN_EVERY,
-    hyperparameter indicating frequency to print training statistics (default: roughly 10x per epoch)
+    Returns newly initialized model, tokenizer, and optimizer.
     """
     model = BetterTransformer(VOCAB_SIZE, SEQ_LENGTH, N_EMBD, N_HEAD, N_LAYER,
                             tokenizer.pad_token_id, tokenizer.eos_token_id, device).to(device)
@@ -75,16 +74,8 @@ def prep_train(train_dataloader):
     # scheduler = torch.optim.lr_scheduler.SequentialLR(optimizer, [warmup_scheduler, train_scheduler],
     #                                                                 [PCT_WARMUP*num_steps])
     # # last argument indicates when to switch scheduler from warmup to train
-
-    ## Set frequency to print training statistics
-    # Default: Compute training loss roughly 10 times per epoch and val loss once an epoch
-    TRAIN_EVERY = round(int(len(train_dataloader) / 10),
-                        -2) # nearest hundred steps
-
-    print(f'There are {len(train_dataloader)} batches in an epoch; train loss is computed every {TRAIN_EVERY} steps and',
-        f'validation loss is computed every epoch.')
     
-    return model, tokenizer, optimizer, TRAIN_EVERY
+    return model, tokenizer, optimizer
 
 def load(model, optimizer):
     model.load_state_dict(torch.load(f'{PATH}/model/{MODEL_NAME}_epoch_{LOAD_EPOCH}.pt',
@@ -112,7 +103,7 @@ def load(model, optimizer):
 
 def train(model, tokenizer,
           train_dataloader, val_dataloader,
-          device, optimizer, TRAIN_EVERY,
+          device, optimizer,
           train_loss_list=None, val_loss_list=None):
 
     train_losses = train_loss_list if train_loss_list is not None else []
@@ -134,6 +125,14 @@ def train(model, tokenizer,
                     "Once there was a tiny cat named Bob. He wanted to eat the cookies on the counter, but"]
 
     cond_token_list = tokenizer(cond_prompts).input_ids
+
+    # Compute frequency to print training statistics
+    # Default: Compute training loss roughly 10 times per epoch and val loss once an epoch
+    COMPUTE_EVERY = round(int(len(train_dataloader) / COMPUTE_PER_EPOCH),
+                        -2) # nearest hundred steps
+
+    print(f'There are {len(train_dataloader)} batches in an epoch; train loss is computed every {COMPUTE_EVERY} steps and',
+        f'validation loss is computed every epoch.')
 
     for epoch in range(START_EPOCH, EPOCHS):
         print(f"Epoch {epoch+1}, Learning rate: {optimizer.param_groups[0]['lr']}")
@@ -173,7 +172,7 @@ def train(model, tokenizer,
             train_times.append(time.perf_counter()-start)
 
             # remove time of last batch later. temporarily there for estimation of training time
-            if step % TRAIN_EVERY == 0:
+            if step % COMPUTE_EVERY == 0:
                 if step != 0: # avoid clashing with validation print statement
                     print(f"Epoch: {epoch+1}/{EPOCHS} | Step: {step}/{len(train_dataloader)} | Train Loss: {loss.item():.5f} |",
                               f"Grad Norm: {norm:.5f} | Train Batch Time: {np.mean(train_times):.3f}")

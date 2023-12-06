@@ -13,13 +13,13 @@ def main():
     print(f'Model will be saved every {SAVE_EVERY} epochs, and will generate text every {GENERATE_EVERY} epochs')
 
     train_dataloader, val_dataloader = get_dataloaders()
-    model, tokenizer, optimizer, TRAIN_EVERY = prep_train(train_dataloader)
+    model, tokenizer, optimizer = prep_train(train_dataloader)
     if CHECKPOINT:
         model, optimizer, train_losses, val_losses = load(model, optimizer)
-        train(model, tokenizer, train_dataloader, val_dataloader, device, optimizer, TRAIN_EVERY,
+        train(model, tokenizer, train_dataloader, val_dataloader, device, optimizer,
                 train_losses, val_losses)
     else:
-        train(model, tokenizer, train_dataloader, val_dataloader, device, optimizer, TRAIN_EVERY)
+        train(model, tokenizer, train_dataloader, val_dataloader, device, optimizer)
     
     # # Test trained model
     # generate_inference(model, tokenizer, device, method='multinomial')
