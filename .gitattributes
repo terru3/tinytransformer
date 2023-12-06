@@ -1,1 +1,1 @@
-model/bt_8_LAYERs_100_DATA_PCT_768_EMBD_DIM_epoch_10.pt filter=lfs diff=lfs merge=lfs -text
+*.pt filter=lfs diff=lfs merge=lfs -text
