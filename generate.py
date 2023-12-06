@@ -20,7 +20,7 @@ def generate_inference(
     p_nucleus=None,
     temp=None,
     max_new_tokens=None,
-    cond=None,
+    cond="",
     deterministic=None,
 ):
     """
@@ -35,7 +35,7 @@ def generate_inference(
       -p_nucleus (float/int): Cumulative probability cutoff if nucleus/top-p decoding
       -temp (float/int): Temperature if temperature decoding
       -max_new_tokens (int): Maximum number of tokens to generate
-      -cond (str=None): If provided, will serve as conditional prompt for text generation
+      -cond (str=''): If provided, will serve as conditional prompt for text generation
       -deterministic (int): If deterministic, uses the specified seed for model generation
     Returns:
       -res (str): Generated text string
@@ -84,7 +84,7 @@ def generate_inference(
     if deterministic is not None:
         set_seed(deterministic)
 
-    if cond is not None:
+    if cond != "":
 
         cond_tokens = tokenizer(cond).input_ids
 

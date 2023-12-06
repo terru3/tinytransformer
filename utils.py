@@ -37,9 +37,12 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 # it receives the true value as input for the next timestep. This is efficient because you don't need to run the
 # model sequentially, the outputs at the different sequence locations can be computed in parallel.
 
-tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
-if tokenizer.pad_token is None:
-    tokenizer.add_special_tokens({"pad_token": "[PAD]"})
+
+def load_tokenizer(device):
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
+    if tokenizer.pad_token is None:
+        tokenizer.add_special_tokens({"pad_token": "[PAD]"})
+    return tokenizer
 
 
 def shift_tokens_right(input_ids: torch.Tensor, decoder_start_token_id: int):
@@ -48,6 +51,8 @@ def shift_tokens_right(input_ids: torch.Tensor, decoder_start_token_id: int):
     shifted_input_ids[:, 0] = decoder_start_token_id  # add the start token
     return shifted_input_ids
 
+
+tokenizer = load_tokenizer
 
 # define custom collate function for dataloader
 def collate_wrapper(batch):
