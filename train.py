@@ -68,7 +68,7 @@ def prep_train(train_dataloader):
         tokenizer.eos_token_id,
         device,
     ).to(device)
-    model.init_params()
+
     print(f"Number of model parameters: {sum(p.numel() for p in model.parameters())}")
 
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
