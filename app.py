@@ -36,7 +36,7 @@ def main():
     st.subheader("How Do I Prompt?")
     st.markdown(
         """
-        Instead of generating a new story from scratch, you can "prompt" the model by writing the first few words of a story, and let it finish from there. It can even jump in mid-sentence!
+        Instead of generating a new story from scratch, you can "prompt" the model by writing the first few sentences of a story, and let it finish from there. It can even jump in mid-sentence!
         
         The model can struggle with some prompts, especially those outside of its limited domain. If a response isn't satisfactory, try repeating the generation, or make the following modifications:
         """
@@ -45,7 +45,8 @@ def main():
         """
         - **Use simple vocabulary and syntax** - words, structures, and themes you'd see in a children's story.
         - Use common first names only - the model can struggle with longer or uncommon names.
-        `SAMPLE PROMPT: One day, Timmy and Lily were playing at the park. They decided to`
+        
+        `SAMPLE PROMPT: Once upon a time, there was a little girl named Lily. She loved to play at the park with her friend Timmy. One day, Lily and Timmy`
         """
     )
 
@@ -63,7 +64,7 @@ def main():
     specified_k = 5
     specified_nucleus = 0.5
     specified_temperature = 0.4
-    max_tokens = 750
+    max_tokens = 1000
 
     if st.checkbox("Show Advanced Settings"):
         user_seed = st.number_input(
@@ -96,7 +97,7 @@ def main():
                 max_value=1.0,
             )
 
-        max_tokens = st.slider("Max Tokens Generated:", 50, 750, 750)
+        max_tokens = st.slider("Max Tokens Generated:", 50, 1000, 1000)
 
     model = load_big_model(tokenizer, device)
     model.to(device)
