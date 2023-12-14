@@ -16,7 +16,7 @@ def main():
         device
     )
 
-    st.title("TinyStories Transformer LLM Demo")
+    st.title("TinyStories Transformer Demo 🤖")
 
     st.subheader("Data and Training")
 
@@ -36,7 +36,8 @@ def main():
     st.subheader("How Do I Prompt?")
     st.markdown(
         """
-        Instead of generating a new story from scratch, you can "prompt" the model by writing the first few words or sentences of a story, and let it finish from there. It can even jump in mid-sentence!
+        Instead of generating a new story from scratch, you can "prompt" the model by writing the first few words of a story, and let it finish from there. It can even jump in mid-sentence!
+        
         The model can struggle with some prompts, especially those outside of its limited domain. If a response isn't satisfactory, try repeating the generation, or make the following modifications:
         """
     )
