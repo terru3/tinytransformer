@@ -16,7 +16,7 @@ def main():
         device
     )
 
-    st.title("Short Story Transformer Demo")
+    st.title("TinyStories Transformer LLM Demo")
 
     st.subheader("Data and Training")
 
