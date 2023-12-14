@@ -128,7 +128,9 @@ def generate_inference(
             )
         )[0]
 
-        res = re.sub(re.escape(tokenizer.bos_token), "", res, count=2) # Remove start and end tokens
+        res = re.sub(
+            re.escape(tokenizer.bos_token), "", res, count=2
+        )  # Remove start and end tokens
 
     # Clean up Unicode character issues
     # 'â€œ' then 'â€' = opening and closing double quotes
@@ -136,6 +138,6 @@ def generate_inference(
     res = re.sub(r"â€œ", '"', res)
     res = re.sub(r"â€™", "'", res)
     res = re.sub(r"â€", '"', res)
-    res = res + " <|endoftext|>" ## better end token with space
+    res = res + " <|endoftext|>"  ## better end token with space
 
     return res
