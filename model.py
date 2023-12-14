@@ -81,7 +81,6 @@ class MultiHeadAttention(nn.Module):
         v = self.split_heads(self.value(x))
 
         # Step 3: Compute scaled dot-product attention with causal mask
-        # not done. should use generate_mask
         attn = self.scaled_dot_product(q, k, v, self.drop, mask)
 
         # Step 4 and 5: Concatenate attention scores, return projected output matrix
